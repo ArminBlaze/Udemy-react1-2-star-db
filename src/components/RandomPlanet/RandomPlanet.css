@@ -1,0 +1,23 @@
+.RandomPlanet {
+  display: flex;
+  padding: 1rem;
+}
+
+.RandomPlanet .planet-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin-right: 1rem;
+}
+
+.RandomPlanet .list-group {
+  /* margin: 1rem 0 0 1rem; */
+}
+
+.RandomPlanet .list-group-item {
+  padding: .25rem;
+}
+
+.RandomPlanet .list-group-item .term {
+  margin-right: .5rem;
+}
