@@ -1,6 +1,7 @@
 .RandomPlanet {
   display: flex;
   padding: 1rem;
+  position: relative;
 }
 
 .RandomPlanet .planet-image {
