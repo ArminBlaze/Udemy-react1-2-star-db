@@ -36,15 +36,7 @@ export default class RandomPlanet extends Component {
     .then( (planet) => {
       console.log(planet);
 
-
-      //т.к. формат Api не совсем совпадает с форматом нашего state, то мы не просто присваеваем планету полученную с сервера в state, а проходимся по свойствам. Отбрасываем лишние свойства, плюс можем изменить названия свойств на более удобные
-      this.setState({
-        name: planet.name,
-        population: planet.population,
-        diameter: planet.diameter,
-        rotationPeriod: planet.rotation_period,
-        id: id,
-      })
+      this.setState(planet);
     })
 
 
