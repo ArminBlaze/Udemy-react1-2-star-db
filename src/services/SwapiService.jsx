@@ -6,7 +6,7 @@ class SwapiService {
 	async getUrl(url) {
 		const response = await fetch( `${this._apiBase + url}` );
 
-		if(!response.ok) throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`)
+		if(!response.ok) throw new Error(`Ошибка сервера: ${response.status} ${response.statusText} \nЗапрашиваемый адрес: ${response.url}`)
 
 		const json = await response.json();
 		return json;
