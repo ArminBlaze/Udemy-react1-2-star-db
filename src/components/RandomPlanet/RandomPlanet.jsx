@@ -7,12 +7,16 @@ import Spinner from "components/Spinner/Spinner";
 
 export default class RandomPlanet extends Component {
 
+  //добавили свойство loading, пока компонент не получит данные с сервера будет крутиться спиннер
   state = {
-    population: null,
-    rotationPeriod: null,
-    diameter: null,
-    name: undefined,
-    id: null
+    loading: true,
+    planet: {
+      population: null,
+      rotationPeriod: null,
+      diameter: null,
+      name: undefined,
+      id: null,
+    },
   }
 
   //инициализируем сервис для работы с сервером
@@ -37,7 +41,8 @@ export default class RandomPlanet extends Component {
     .then( (planet) => {
       console.log(planet);
 
-      this.setState(planet);
+      //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
+      this.setState({planet, loading: false});
     })
 
 
@@ -49,34 +54,46 @@ export default class RandomPlanet extends Component {
   }
 
   render() {
-    //в имени вставляем пробел по умолчанию, чтобы не прыгала страница, пока не было загружено имя планеты
-    const {population, rotationPeriod, diameter, name = "\u200B", id} = this.state;
+    //планета теперь отдельный объект-свойство, поэтому у нас получается короткая деструктуризация
+    const {planet, loading} = this.state;
 
+    //если данные получены, то спиннер можно спрятать
+    //также вся разметка компонента вынесена в отдельный компонент, для удобства
     return (
       <div className="RandomPlanet jumbotron rounded">
-        <Spinner />
-        <img className="planet-image"
-             src={ id ? (`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`) : ('') }
-             alt={`Planet ${name}`} />
-        <div>
-          <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Population:</span>
-              <span>{population}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Rotation Period:</span>
-              <span>{rotationPeriod}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Diameter:</span>
-              <span>{diameter}</span>
-            </li>
-          </ul>
-        </div>
+        {loading ? <Spinner /> : null}
+        <PlanetView planet={planet}/>
       </div>
-
     );
   }
+}
+
+const PlanetView = (props) => {
+  const {population, rotationPeriod, diameter, name = "\u200B", id} = props.planet;
+
+  //Чтобы не создавать лишнюю обёртку-div, мы можем использовать фрагмент. Так можно экспортировать несколько "корневых" элементов (ниже это img и div), обернув их виртуальной оберткой.
+  return (
+    <React.Fragment>
+      <img className="planet-image"
+             src={ id ? `https://starwars-visualguide.com/assets/img/planets/${id}.jpg` : '' }
+             alt={`Planet ${name}`} />
+      <div>
+        <h4>{name}</h4>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">
+            <span className="term">Population:</span>
+            <span>{population}</span>
+          </li>
+          <li className="list-group-item">
+            <span className="term">Rotation Period:</span>
+            <span>{rotationPeriod}</span>
+          </li>
+          <li className="list-group-item">
+            <span className="term">Diameter:</span>
+            <span>{diameter}</span>
+          </li>
+        </ul>
+      </div>
+    </React.Fragment>
+  )
 }
