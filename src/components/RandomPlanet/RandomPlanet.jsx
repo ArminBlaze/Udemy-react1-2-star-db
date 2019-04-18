@@ -24,18 +24,22 @@ export default class RandomPlanet extends Component {
   //инициализируем сервис для работы с сервером
   swapiService = new SwapiService();
 
-  //в конструкторе получаем данные случайной планеты
+  //убираем получение данных о планете из конструктора в DidMount
   constructor() {
-    super();
+
+  }
+
+  //получение данных о планете тут. Гарантированно можно менять state, и есть DOM
+  //Запускаем тут код, который создаёт побочные эффекты
+  componentDidMount() {
     this.updatePlanet();
   }
 
   
-  updatePlanet() {
+  updatePlanet = () => {
     let maxPlanetNumber = 19;
     let minPlanetNumber = 2;
-    // let id = generateRandom(minPlanetNumber, maxPlanetNumber);
-    let id = 12555;
+    let id = this.generateRandom(minPlanetNumber, maxPlanetNumber);
     console.log(id);
 
     //получаем с сервера планету через сервис для работы с сервером
@@ -45,13 +49,12 @@ export default class RandomPlanet extends Component {
     .finally( () => {
       this.setState({loading: false})
     })
+  }
 
-
-    function generateRandom(min, max) {
-      let rand = min + Math.random() * (max + 1 - min);
-      rand = Math.floor(rand);
-      return rand;
-    }
+  generateRandom(min, max) {
+    let rand = min + Math.random() * (max + 1 - min);
+    rand = Math.floor(rand);
+    return rand;
   }
 
   onError = (err) => {
