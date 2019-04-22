@@ -10,14 +10,24 @@ export default class PersonDetails extends Component {
   state = {
     loading: true,
     error: false,
-    person: null
+    person: {
+      eyeColor: null,
+      gender: null,
+      birthYear: null,
+      name: "\u200B",
+      id: null
+    }
   }
 
   swapiService = new SwapiService();
 
   updatePerson() {
+    if(!this.state.loading) this.setState({loading: true})
     let id = this.props.selectedPerson;
-    if(!id) return;
+    if(!id) {
+      this.setState({loading: false});
+      return;
+    } 
 
     this.swapiService.getPerson(id)
     .then(this.onPersonLoaded)
@@ -33,6 +43,7 @@ export default class PersonDetails extends Component {
 
   componentDidUpdate(prevProps) {
     if(this.props.selectedPerson !== prevProps.selectedPerson) {
+
       this.updatePerson();
       console.log('обновить')
     }
@@ -51,16 +62,20 @@ export default class PersonDetails extends Component {
 
 
   render() {
+    console.log(this.state);
     const {person, loading, error} = this.state;
     if(person) console.log(person);
 
-    if(!person) return <div className="PersonDetails card">Пожалуйста выберите персонажа из списка</div>
+    let id = this.props.selectedPerson;
+
+    // if(!person) return <div className="PersonDetails card">Пожалуйста выберите персонажа из списка</div>
 
     return (
       <div className="PersonDetails card">
         {loading ? <Spinner /> : null}
         {error ? <ErrorIndicator /> : null}
-        <PersonView person={person}/>
+        {id ? <PersonView person={person}/> : "Пожалуйста выберите персонажа из списка"}
+        
       </div>
     )
   }
@@ -73,7 +88,10 @@ let PersonView = (props) => {
   return (
     <React.Fragment>
       <img className="person-image"
-        src={ id ? `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` : ''} alt={name}/>
+        src={ id ? `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` : ''} 
+        alt={name}
+        width="auto"
+        height="209"/>
 
       <div className="card-body">
         <h4>{name}</h4>
