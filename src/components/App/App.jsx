@@ -9,12 +9,21 @@ import './App.css';
 
 class App extends React.Component {
 
+  state = {
+    selectedPerson: null,
+  }
+
   onPersonClick = (id) => {
     console.log(id);
+    this.setState({
+      selectedPerson: id
+    })
   }
 
 
   render() {
+    let {selectedPerson} = this.state;
+
     return (
       <div>
         <Header />
@@ -25,7 +34,7 @@ class App extends React.Component {
             <List onPersonClick={ this.onPersonClick }/>
           </div>
           <div className="col-md-6">
-            <PersonDetails />
+            <PersonDetails selectedPerson={ selectedPerson }/>
           </div>
         </div>
       </div>
