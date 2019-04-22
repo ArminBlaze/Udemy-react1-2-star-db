@@ -36,45 +36,29 @@ export default class ItemList extends Component {
     this.setState({error: true})
   }
 
+  renderItems(arr) {
+    return arr.map((item) => {
+      return (
+        <li className="list-group-item" key={item.id}
+        onClick={ () => this.props.onPersonClick(item.id) }>
+          {item.name}
+        </li>
+      )
+    })
+  }
+
 
   render() {
-    const {onPersonClick} = this.props;
     const {peopleList, loading, error} = this.state;
     let showContent = !loading && !error;
+
     
     return (
       <ul className="List list-group">
 			  {loading ? <Spinner /> : null}
         {error ? <ErrorIndicator /> : null}
-        {showContent ? <ListView peopleList={peopleList} onPersonClick={onPersonClick}/> : null }
+        {showContent ? this.renderItems(peopleList) : null }
 		  </ul>
     );
   }
-}
-
-
-const ListView = (props) => {
-  const {peopleList, onPersonClick} = props;
-
-
-  const elements = peopleList.map( (item, i) => {
-		//используем деструктуризацию. Т.к. label={item.label} important={item.important} - Т.е. имена передаваемых свойств (label и important) Совпадают с именами свойств item.label и item.important. То мы передаём в компонент просто объект item
-//		Либо можно вызывать компонент как обычную функцию
-//		{TodoListItem(item)}
-		const {id, name} = item;
-		
-		return (
-      <li className="list-group-item" key={id}
-      onClick={ () => onPersonClick(id) }>
-        {name}
-      </li>
-		)
-	});
-	
-	
-	return (
-    <React.Fragment>
-      {elements}
-    </React.Fragment>
-	);
 }
