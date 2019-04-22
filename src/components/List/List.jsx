@@ -2,21 +2,79 @@ import React, { Component } from 'react';
 
 import './List.css';
 
+import SwapiService from "services/SwapiService";
+import Spinner from "components/Spinner/Spinner";
+import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
+
 export default class ItemList extends Component {
 
+  state = {
+    peopleList: null,
+    loading: true,
+    error: false,
+  }
+
+  swapiService = new SwapiService();
+
+  componentDidMount() {
+    this.swapiService.getAllPeople()
+    .then(this.onPeopleLoaded)
+    .catch(this.onError)
+    .finally( () => {
+      this.setState({loading: false})
+    })
+  }
+
+  onPeopleLoaded = (peopleList) => {
+    console.log(peopleList);
+    //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
+    this.setState({peopleList});
+  }
+
+  onError = (err) => {
+    console.log(err);
+    this.setState({error: true})
+  }
+
+
   render() {
+    const {onPersonClick} = this.props;
+    const {peopleList, loading, error} = this.state;
+    let showContent = !loading && !error;
+    
     return (
       <ul className="List list-group">
-        <li className="list-group-item">
-          Luke Skywalker
-        </li>
-        <li className="list-group-item">
-          Darth Vader
-        </li>
-        <li className="list-group-item">
-          R2-D2
-        </li>
-      </ul>
+			  {loading ? <Spinner /> : null}
+        {error ? <ErrorIndicator /> : null}
+        {showContent ? <ListView peopleList={peopleList} onPersonClick={onPersonClick}/> : null }
+		  </ul>
     );
   }
+}
+
+
+const ListView = (props) => {
+  const {peopleList, onPersonClick} = props;
+
+
+  const elements = peopleList.map( (item, i) => {
+		//используем деструктуризацию. Т.к. label={item.label} important={item.important} - Т.е. имена передаваемых свойств (label и important) Совпадают с именами свойств item.label и item.important. То мы передаём в компонент просто объект item
+//		Либо можно вызывать компонент как обычную функцию
+//		{TodoListItem(item)}
+		const {id, name} = item;
+		
+		return (
+      <li className="list-group-item" key={id}
+      onClick={ () => onPersonClick(id) }>
+        {name}
+      </li>
+		)
+	});
+	
+	
+	return (
+    <React.Fragment>
+      {elements}
+    </React.Fragment>
+	);
 }
