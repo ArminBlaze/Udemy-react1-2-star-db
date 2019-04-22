@@ -52,7 +52,7 @@ class SwapiService {
 		return item.url.match(idRegexp)[1];
 	}
 
-	_transformPlanet(planet) {
+	_transformPlanet = (planet) => {
 		let id = this._getIdFromUrl(planet);
 
 		return	{
@@ -64,7 +64,7 @@ class SwapiService {
 		}
 	}
 
-	_transformSpaceship(ship) {
+	_transformSpaceship = (ship) => {
 		let id = this._getIdFromUrl(ship);
 
 		return	{
@@ -80,7 +80,7 @@ class SwapiService {
 		}
 	}
 
-	_transformPerson(person) {
+	_transformPerson = (person) => {
 		let id = this._getIdFromUrl(person);
 
 		return	{
