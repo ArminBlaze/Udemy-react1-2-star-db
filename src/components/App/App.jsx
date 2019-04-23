@@ -11,6 +11,7 @@ class App extends React.Component {
 
   state = {
     selectedPerson: null,
+    showRandomPlanet: true,
   }
 
   onPersonClick = (id) => {
@@ -20,6 +21,14 @@ class App extends React.Component {
     })
   }
 
+  toggleRandomPlanet = () => {
+    this.setState((state) => {
+      return {
+        showRandomPlanet: !state.showRandomPlanet
+      }
+    });
+  }
+
 
   render() {
     let {selectedPerson} = this.state;
@@ -27,7 +36,13 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <RandomPlanet />
+
+        {this.state.showRandomPlanet ? <RandomPlanet/> : null}
+        <button
+          className="toggle-planet btn btn-warning btn-lg"
+          onClick={this.toggleRandomPlanet}>
+          Toggle Random Planet
+        </button>
   
         <div className="row mb2">
           <div className="col-md-6">

@@ -31,6 +31,12 @@ export default class RandomPlanet extends Component {
   //Запускаем тут код, который создаёт побочные эффекты
   componentDidMount() {
     this.updatePlanet();
+
+    this.interval = setInterval(this.updatePlanet, 10000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   
