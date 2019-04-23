@@ -63,7 +63,7 @@ export default class PersonDetails extends Component {
 
   render() {
     console.log(this.state);
-    const {person, loading, error} = this.state;
+    const {person, loading, error, imageLoaded} = this.state;
     if(person) console.log(person);
 
     let id = this.props.selectedPerson;
@@ -74,42 +74,72 @@ export default class PersonDetails extends Component {
       <div className="PersonDetails card">
         {loading ? <Spinner /> : null}
         {error ? <ErrorIndicator /> : null}
-        {id ? <PersonView person={person}/> : "Пожалуйста выберите персонажа из списка"}
+        {id ? <PersonView person={person} imageLoaded={imageLoaded} /> : "Пожалуйста выберите персонажа из списка"}
         
       </div>
     )
   }
 }
 
-let PersonView = (props) => {
-  const {eyeColor, gender, birthYear, name = "\u200B", id} = props.person;
- 
+//проверить сколько раз запускается render
+class PersonView extends Component {
+  state = {
+    imageLoaded: false,
+  }
 
-  return (
-    <React.Fragment>
-      <img className="person-image"
-        src={ id ? `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` : ''} 
-        alt={name}
-        width="auto"
-        height="209"/>
+  componentDidUpdate(prevProps) {
+    if(this.props.person !== prevProps.person) {
+      this.setState({
+        imageLoaded: false
+      })
+    }
+  }
 
-      <div className="card-body">
-        <h4>{name}</h4>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender</span>
-            <span>{gender}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year</span>
-            <span>{birthYear}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color</span>
-            <span>{eyeColor}</span>
-          </li>
-        </ul>
-      </div>
-    </React.Fragment>
-  )
+
+  onImageLoad = () => {
+    this.setState({
+      imageLoaded: true
+    })
+  }
+
+
+  render() {
+    const {eyeColor, gender, birthYear, name = "\u200B", id} = this.props.person;
+    let {imageLoaded} = this.state;
+  
+    // style={imageLoaded ? 'visible' : 'hidden'}
+  
+    return (
+      <React.Fragment>
+        <img className="person-image"
+          src={ id ? `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` : ''} 
+          alt={name}
+          width="auto"
+          height="209"
+          onLoad={ this.onImageLoad }
+          style={{visibility: `${imageLoaded ? 'visible' : 'hidden'}`}}
+          />
+  
+        <div className="card-body">
+          <h4>{name}</h4>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">
+              <span className="term">Gender</span>
+              <span>{gender}</span>
+            </li>
+            <li className="list-group-item">
+              <span className="term">Birth Year</span>
+              <span>{birthYear}</span>
+            </li>
+            <li className="list-group-item">
+              <span className="term">Eye Color</span>
+              <span>{eyeColor}</span>
+            </li>
+          </ul>
+        </div>
+      </React.Fragment>
+    )
+  }
 }
+
+
