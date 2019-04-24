@@ -5,6 +5,7 @@ import './PersonDetails.css';
 import SwapiService from "services/SwapiService";
 import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
+import ErrorButton from '../ErrorButton/ErrorButton';
 
 export default class PersonDetails extends Component {
   state = {
@@ -135,8 +136,13 @@ class PersonView extends Component {
               <span className="term">Eye Color</span>
               <span>{eyeColor}</span>
             </li>
+            <li className="list-group-item">
+              <ErrorButton />
+            </li>
           </ul>
         </div>
+
+        
       </React.Fragment>
     )
   }

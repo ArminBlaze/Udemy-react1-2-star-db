@@ -2,9 +2,8 @@ import React from 'react';
 
 import Header from '../Header/Header';
 import RandomPlanet from '../RandomPlanet/RandomPlanet';
-import List from '../List/List';
+import PeoplePage from '../PeoplePage/PeoplePage';
 import ErrorButton from '../ErrorButton/ErrorButton';
-import PersonDetails from '../PersonDetails/PersonDetails';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
 import './App.css';
@@ -12,17 +11,10 @@ import './App.css';
 class App extends React.Component {
 
   state = {
-    selectedPerson: null,
     showRandomPlanet: true,
     reactError: false,
   }
 
-  onPersonClick = (id) => {
-    console.log(id);
-    this.setState({
-      selectedPerson: id
-    })
-  }
 
   toggleRandomPlanet = () => {
     this.setState((state) => {
@@ -44,8 +36,6 @@ class App extends React.Component {
   render() {
     if(this.state.reactError) return <ErrorIndicator />
 
-    let {selectedPerson} = this.state;
-
     return (
       <div>
         <Header />
@@ -57,15 +47,11 @@ class App extends React.Component {
           Toggle Random Planet
         </button>
         <ErrorButton />
+
+        <PeoplePage />
+        <PeoplePage />
+        <PeoplePage />
   
-        <div className="row mb2">
-          <div className="col-md-6">
-            <List onPersonClick={ this.onPersonClick }/>
-          </div>
-          <div className="col-md-6">
-            <PersonDetails selectedPerson={ selectedPerson }/>
-          </div>
-        </div>
       </div>
     );
   }
