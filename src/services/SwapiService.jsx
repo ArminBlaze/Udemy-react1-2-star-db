@@ -3,7 +3,7 @@ class SwapiService {
 	
 	_apiBase = `https://swapi.co/api`;
 	
-	async getUrl(url) {
+	getUrl = async (url) => {
 		const response = await fetch( `${this._apiBase + url}` );
 
 		if(!response.ok) throw new Error(`Ошибка сервера: ${response.status} ${response.statusText} \nЗапрашиваемый адрес: ${response.url}`)
@@ -12,32 +12,32 @@ class SwapiService {
 		return json;
 	}
 	
-	async getAllPeople() {
+	getAllPeople = async () => {
 		const res = await this.getUrl('/people/');
 		return res.results.map(this._transformPerson);
 	}
 	
-	async getPerson(id) {
+	getPerson = async (id) => {
 		let person = await this.getUrl(`/people/${id}/`);
 		return this._transformPerson(person);
 	}
 
-	async getAllPlanets() {
+	getAllPlanets = async () => {
 		const res = await this.getUrl('/planets/');
 		return res.results.map(this._transformPlanet);
 	}
 	
-	async getPlanet(id) {
+	getPlanet = async (id) => {
 		let planet = await this.getUrl(`/planets/${id}/`);
 		return this._transformPlanet(planet);
 	}
 
-	async getAllStarships() {
+	getAllStarships = async () => {
 		const res = await this.getUrl('/starships/');
-		return res.results.map(this.__transformSpaceship);
+		return res.results.map(this._transformSpaceship);
 	}
 	
-	async getStarship(id) {
+	getStarship = async (id) => {
 		let ship = this.getUrl(`/starships/${id}/`);
 		return this._transformSpaceship(ship);
 	}

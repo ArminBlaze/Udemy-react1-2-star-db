@@ -2,22 +2,20 @@ import React, { Component } from 'react';
 
 import './List.css';
 
-import SwapiService from "services/SwapiService";
 import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
 export default class ItemList extends Component {
 
   state = {
-    peopleList: null,
+    itemsList: null,
     loading: true,
     error: false,
   }
 
-  swapiService = new SwapiService();
 
   componentDidMount() {
-    this.swapiService.getAllPeople()
+    this.props.getData()
     .then(this.onPeopleLoaded)
     .catch(this.onError)
     .finally( () => {
@@ -25,10 +23,10 @@ export default class ItemList extends Component {
     })
   }
 
-  onPeopleLoaded = (peopleList) => {
-    console.log(peopleList);
+  onPeopleLoaded = (itemsList) => {
+    console.log(itemsList);
     //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
-    this.setState({peopleList});
+    this.setState({itemsList});
   }
 
   onError = (err) => {
@@ -49,7 +47,7 @@ export default class ItemList extends Component {
 
 
   render() {
-    const {peopleList, loading, error} = this.state;
+    const {itemsList, loading, error} = this.state;
     let showContent = !loading && !error;
 
     
@@ -57,7 +55,7 @@ export default class ItemList extends Component {
       <ul className="List list-group">
 			  {loading ? <Spinner /> : null}
         {error ? <ErrorIndicator /> : null}
-        {showContent ? this.renderItems(peopleList) : null }
+        {showContent ? this.renderItems(itemsList) : null }
 		  </ul>
     );
   }

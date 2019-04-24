@@ -6,6 +6,10 @@ import PeoplePage from '../PeoplePage/PeoplePage';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
+import List from '../List/List';
+import PersonDetails from '../PersonDetails/PersonDetails';
+import SwapiService from "services/SwapiService";
+
 import './App.css';
 
 class App extends React.Component {
@@ -14,6 +18,8 @@ class App extends React.Component {
     showRandomPlanet: true,
     reactError: false,
   }
+
+  swapiService = new SwapiService();
 
 
   toggleRandomPlanet = () => {
@@ -37,20 +43,47 @@ class App extends React.Component {
     if(this.state.reactError) return <ErrorIndicator />
 
     return (
-      <div>
+      <div className="StardbApp">
         <Header />
 
         {this.state.showRandomPlanet ? <RandomPlanet/> : null}
-        <button
-          className="toggle-planet btn btn-warning btn-lg"
-          onClick={this.toggleRandomPlanet}>
-          Toggle Random Planet
-        </button>
-        <ErrorButton />
+
+        <div className="row mb2 button-row">
+          <button
+            className="toggle-planet btn btn-warning btn-lg"
+            onClick={this.toggleRandomPlanet}>
+            Toggle Random Planet
+          </button>
+          <ErrorButton />
+        </div>
+        
 
         <PeoplePage />
-        <PeoplePage />
-        <PeoplePage />
+
+
+        <div className="row mb2 PeoplePage">
+          <div className="col-md-6">
+            <List onPersonClick={ this.onPersonClick }
+            getData={ this.swapiService.getAllStarships }
+            />
+          </div>
+          <div className="col-md-6">
+            <PersonDetails selectedPerson={ this.state.selectedPerson }
+            />
+          </div>
+        </div>
+
+
+        <div className="row mb2 PeoplePage">
+          <div className="col-md-6">
+            <List onPersonClick={ this.onPersonClick }
+            getData={ this.swapiService.getAllStarships }
+            />
+          </div>
+          <div className="col-md-6">
+            <PersonDetails selectedPerson={ this.state.selectedPerson }/>
+          </div>
+        </div>
   
       </div>
     );

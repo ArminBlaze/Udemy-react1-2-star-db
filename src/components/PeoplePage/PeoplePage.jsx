@@ -4,6 +4,7 @@ import './PeoplePage.css';
 
 import List from '../List/List';
 import PersonDetails from '../PersonDetails/PersonDetails';
+import SwapiService from "services/SwapiService";
 
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
@@ -13,6 +14,8 @@ export default class PeoplePage extends Component {
     selectedPerson: null,
     reactError: false,
   }
+
+  swapiService = new SwapiService();
 
   onPersonClick = (id) => {
     console.log(id);
@@ -31,18 +34,17 @@ export default class PeoplePage extends Component {
   render() {
     if(this.state.reactError) return <div className="row mb2 PeoplePage"><ErrorIndicator /></div>
 
-    let {selectedPerson} = this.state;
-
     return (
       <div className="row mb2 PeoplePage">
         <div className="col-md-6">
-          <List onPersonClick={ this.onPersonClick }/>
+          <List onPersonClick={ this.onPersonClick }
+            getData={ this.swapiService.getAllPeople }
+          />
         </div>
         <div className="col-md-6">
-          <PersonDetails selectedPerson={ selectedPerson }/>
+          <PersonDetails selectedPerson={ this.state.selectedPerson }/>
         </div>
       </div>
-      
     )
   }
 }
