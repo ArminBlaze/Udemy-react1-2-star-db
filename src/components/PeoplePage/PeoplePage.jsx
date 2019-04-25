@@ -39,6 +39,7 @@ export default class PeoplePage extends Component {
         <div className="col-md-6">
           <List onPersonClick={ this.onPersonClick }
             getData={ this.swapiService.getAllPeople }
+            renderFunc={ (item) => `${item.name} (${item.gender}, ${item.birthYear})` }
           />
         </div>
         <div className="col-md-6">

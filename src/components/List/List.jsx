@@ -36,10 +36,14 @@ export default class ItemList extends Component {
 
   renderItems(arr) {
     return arr.map((item) => {
+      //используем рендер-функцию для создания содержимого каждого Li
+      //теперь стиль вывода информации задаётся в родительском компоненте
+      let content = this.props.renderFunc(item);
+
       return (
         <li className="list-group-item" key={item.id}
         onClick={ () => this.props.onPersonClick(item.id) }>
-          {item.name}
+          {content}
         </li>
       )
     })

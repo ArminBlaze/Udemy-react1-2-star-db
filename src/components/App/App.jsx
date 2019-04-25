@@ -64,7 +64,9 @@ class App extends React.Component {
         <div className="row mb2 PeoplePage">
           <div className="col-md-6">
             <List onPersonClick={ this.onPersonClick }
-            getData={ this.swapiService.getAllStarships }
+            getData={ this.swapiService.getAllPlanets }
+            // в рендер функции можно передавать JSX разметку
+            renderFunc={ (item) => (<span>{item.name} <button>!</button></span>) }
             />
           </div>
           <div className="col-md-6">
@@ -78,6 +80,7 @@ class App extends React.Component {
           <div className="col-md-6">
             <List onPersonClick={ this.onPersonClick }
             getData={ this.swapiService.getAllStarships }
+            renderFunc={ (item) => item.name }
             />
           </div>
           <div className="col-md-6">
