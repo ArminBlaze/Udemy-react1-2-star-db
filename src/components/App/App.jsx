@@ -5,6 +5,7 @@ import RandomPlanet from '../RandomPlanet/RandomPlanet';
 import PeoplePage from '../PeoplePage/PeoplePage';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
+import Row from '../Row/Row';
 
 import List from '../List/List';
 import PersonDetails from '../PersonDetails/PersonDetails';
@@ -61,32 +62,33 @@ class App extends React.Component {
         <PeoplePage />
 
 
-        <div className="row mb2 PeoplePage">
-          <div className="col-md-6">
-            <List onPersonClick={ this.onPersonClick }
-            getData={ this.swapiService.getAllPlanets }
-            // в рендер функции можно передавать JSX разметку
-            renderFunc={ (item) => (<span>{item.name} <button>!</button></span>) }
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails selectedPerson={ this.state.selectedPerson }
-            />
-          </div>
-        </div>
+        <Row 
+          leftColumn={
+            <List 
+              onPersonClick={ this.onPersonClick }
+              getData={ this.swapiService.getAllPlanets }
+              // в рендер функции можно передавать JSX разметку
+              renderFunc={ (item) => (<span>{item.name} <button>!</button></span>) }
+            /> 
+          } 
+          rightColumn={
+            <PersonDetails selectedPerson={ this.state.selectedPerson } />
+          } 
+        />
 
 
-        <div className="row mb2 PeoplePage">
-          <div className="col-md-6">
-            <List onPersonClick={ this.onPersonClick }
-            getData={ this.swapiService.getAllStarships }
-            renderFunc={ (item) => item.name }
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails selectedPerson={ this.state.selectedPerson }/>
-          </div>
-        </div>
+        <Row 
+          leftColumn={ 
+            <List 
+              onPersonClick={ this.onPersonClick }
+              getData={ this.swapiService.getAllStarships }
+              renderFunc={ (item) => item.name }
+            /> 
+          } 
+          rightColumn={ 
+            <PersonDetails selectedPerson={ this.state.selectedPerson }/> 
+          } 
+        />
   
       </div>
     );
