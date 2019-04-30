@@ -6,15 +6,13 @@ import List from '../List/List';
 import Row from '../Row/Row';
 import PersonDetails from '../PersonDetails/PersonDetails';
 import SwapiService from "services/SwapiService";
-
-import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
+import ErrorBoundry from "components/ErrorBoundry/ErrorBoundry";
 
 
 export default class PeoplePage extends Component {
 
   state = {
     selectedPerson: null,
-    reactError: false,
   }
 
   swapiService = new SwapiService();
@@ -26,15 +24,9 @@ export default class PeoplePage extends Component {
     })
   }
 
-  componentDidCatch() {
-    console.log('componentDidCatch()');
-    this.setState({
-      reactError: true
-    })
-  }
 
   render() {
-    if(this.state.reactError) return <div className="row mb2 PeoplePage"><ErrorIndicator /></div>
+    // if(this.state.reactError) return <div className="row mb2 PeoplePage"><ErrorIndicator /></div>
 
     let itemList = (
       <List onPersonClick={ this.onPersonClick }
@@ -43,11 +35,13 @@ export default class PeoplePage extends Component {
       />
     );
     let personDetails = (
-      <PersonDetails selectedPerson={ this.state.selectedPerson }/>
+      <ErrorBoundry>
+        <PersonDetails selectedPerson={ this.state.selectedPerson }/>
+      </ErrorBoundry>
     );
 
     return (
-      <Row leftColumn={ itemList } rightColumn={ personDetails } />
+        <Row leftColumn={ itemList } rightColumn={ personDetails } />
     )
   }
 }
