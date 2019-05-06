@@ -8,7 +8,7 @@ import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import Row from '../Row/Row';
 
 import List from '../List/List';
-import PersonDetails from '../PersonDetails/PersonDetails';
+import ItemDetails from '../ItemDetails/ItemDetails';
 import SwapiService from "services/SwapiService";
 
 import './App.css';
@@ -43,26 +43,58 @@ class App extends React.Component {
   render() {
     if(this.state.reactError) return <ErrorIndicator />
 
+    let {
+      getPerson,
+      getStarship,
+      getPlanet,
+      getPersonImage,
+      getStarshipImage,
+      getPlanetImage,
+    } = this.swapiService;
+
+    let personDetails = (
+      <ItemDetails itemId={ 11 }
+      getData={ getPerson }
+      getImageUrl={ getPersonImage }/>
+    );
+
+    let starshipDetails = (
+      <ItemDetails itemId={ 5 }
+      getData={ getStarship }
+      getImageUrl={ getStarshipImage }/>
+    );
+
+    // let planetDetails = (
+    //   <ItemDetails itemId={ 5 }
+    //   getData={ getPlanet }
+    //   getImageUrl={ getPlanetImage }/>
+    // );
+
     return (
       <div className="StardbApp">
         <Header />
 
-        {this.state.showRandomPlanet ? <RandomPlanet/> : null}
+        <Row 
+          leftColumn={ personDetails } 
+          rightColumn={ starshipDetails } 
+        />
 
-        <div className="row mb2 button-row">
+        {/* {this.state.showRandomPlanet ? <RandomPlanet/> : null} */}
+
+        {/* <div className="row mb2 button-row">
           <button
             className="toggle-planet btn btn-warning btn-lg"
             onClick={this.toggleRandomPlanet}>
             Toggle Random Planet
           </button>
           <ErrorButton />
-        </div>
+        </div> */}
         
 
-        <PeoplePage />
+        {/* <PeoplePage /> */}
 
 
-        <Row 
+        {/* <Row 
           leftColumn={
             <List 
               onPersonClick={ this.onPersonClick }
@@ -72,12 +104,12 @@ class App extends React.Component {
             /> 
           } 
           rightColumn={
-            <PersonDetails selectedPerson={ this.state.selectedPerson } />
+            <ItemDetails selectedPerson={ this.state.selectedPerson } />
           } 
-        />
+        /> */}
 
 
-        <Row 
+        {/* <Row 
           leftColumn={ 
             <List 
               onPersonClick={ this.onPersonClick }
@@ -86,9 +118,9 @@ class App extends React.Component {
             /> 
           } 
           rightColumn={ 
-            <PersonDetails selectedPerson={ this.state.selectedPerson }/> 
+            <ItemDetails selectedPerson={ this.state.selectedPerson }/> 
           } 
-        />
+        /> */}
   
       </div>
     );

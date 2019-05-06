@@ -4,7 +4,7 @@ import './PeoplePage.css';
 
 import List from '../List/List';
 import Row from '../Row/Row';
-import PersonDetails from '../PersonDetails/PersonDetails';
+import ItemDetails from '../ItemDetails/ItemDetails';
 import SwapiService from "services/SwapiService";
 import ErrorBoundry from "components/ErrorBoundry/ErrorBoundry";
 
@@ -36,7 +36,7 @@ export default class PeoplePage extends Component {
     );
     let personDetails = (
       <ErrorBoundry>
-        <PersonDetails selectedPerson={ this.state.selectedPerson }/>
+        <ItemDetails selectedPerson={ this.state.selectedPerson }/>
       </ErrorBoundry>
     );
 

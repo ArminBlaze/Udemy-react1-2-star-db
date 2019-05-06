@@ -1,19 +1,19 @@
-.PersonDetails {
+.ItemDetails {
   display: flex;
   flex-direction: row;
   padding: 1rem;
 }
 
-.PersonDetails .person-image {
+.ItemDetails .item-image {
   width: 30%;
   /* height: 30%; */
   border-radius: 10px;
 }
 
-.PersonDetails .list-group-item {
+.ItemDetails .list-group-item {
   padding: .25rem;
 }
 
-.PersonDetails .list-group-item .term{
+.ItemDetails .list-group-item .term{
   margin-right: .5rem;
 }

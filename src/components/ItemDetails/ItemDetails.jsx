@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 
-import './PersonDetails.css';
+import './ItemDetails.css';
 
-import SwapiService from "services/SwapiService";
 import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import ErrorButton from '../ErrorButton/ErrorButton';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
   state = {
     loading: true,
     error: false,
-    person: {
+    imageUrl: null,
+
+    item: {
       eyeColor: null,
       gender: null,
       birthYear: null,
@@ -20,18 +21,16 @@ export default class PersonDetails extends Component {
     }
   }
 
-  swapiService = new SwapiService();
-
   updatePerson() {
     if(!this.state.loading) this.setState({loading: true})
-    let id = this.props.selectedPerson;
-    if(!id) {
+    let {itemId, getData} = this.props;
+    if(!itemId) {
       this.setState({loading: false});
       return;
     } 
 
-    this.swapiService.getPerson(id)
-    .then(this.onPersonLoaded)
+    getData(itemId)
+    .then(this.onDataLoaded)
     .catch(this.onError)
     .finally( () => {
       this.setState({loading: false})
@@ -50,10 +49,14 @@ export default class PersonDetails extends Component {
     }
   }
 
-  onPersonLoaded = (person) => {
-    console.log(person);
+  onDataLoaded = (item) => {
+    console.log(item);
+    let getImageUrl = this.props.getImageUrl;
     //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
-    this.setState({person});
+    this.setState({
+      item: item,
+      imageUrl: getImageUrl(item)
+    });
   }
 
   onError = (err) => {
@@ -64,18 +67,18 @@ export default class PersonDetails extends Component {
 
   render() {
     console.log(this.state);
-    const {person, loading, error, imageLoaded} = this.state;
-    if(person) console.log(person);
+    const {item, loading, error, imageUrl} = this.state;
+    if(item) console.log(item);
 
-    let id = this.props.selectedPerson;
+    let id = this.props.itemId;
 
-    // if(!person) return <div className="PersonDetails card">Пожалуйста выберите персонажа из списка</div>
+    // if(!item) return <div className="ItemDetails card">Пожалуйста выберите персонажа из списка</div>
 
     return (
-      <div className="PersonDetails card">
+      <div className="ItemDetails card">
         {loading ? <Spinner /> : null}
         {error ? <ErrorIndicator /> : null}
-        {id ? <PersonView person={person} imageLoaded={imageLoaded} /> : "Пожалуйста выберите персонажа из списка"}
+        {id ? <PersonView item={item} imageUrl={imageUrl} /> : "Пожалуйста выберите персонажа из списка"}
         
       </div>
     )
@@ -89,7 +92,7 @@ class PersonView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.person !== prevProps.person) {
+    if(this.props.item !== prevProps.item) {
       this.setState({
         imageLoaded: false
       })
@@ -105,15 +108,16 @@ class PersonView extends Component {
 
 
   render() {
-    const {eyeColor, gender, birthYear, name = "\u200B", id} = this.props.person;
+    const {eyeColor, gender, birthYear, name = "\u200B", id} = this.props.item;
+    const imageUrl = this.props.imageUrl;
     let {imageLoaded} = this.state;
   
     // style={imageLoaded ? 'visible' : 'hidden'}
   
     return (
       <React.Fragment>
-        <img className="person-image"
-          src={ id ? `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` : ''} 
+        <img className="item-image"
+          src={ id ? `${imageUrl}` : ''} 
           alt={name}
           width="auto"
           height="209"

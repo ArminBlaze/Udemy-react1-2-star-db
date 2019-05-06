@@ -2,6 +2,7 @@
 class SwapiService {
 	
 	_apiBase = `https://swapi.co/api`;
+	_imageBase = `https://starwars-visualguide.com/assets/img`;
 	
 	getUrl = async (url) => {
 		const response = await fetch( `${this._apiBase + url}` );
@@ -38,9 +39,24 @@ class SwapiService {
 	}
 	
 	getStarship = async (id) => {
-		let ship = this.getUrl(`/starships/${id}/`);
+		let ship = await this.getUrl(`/starships/${id}/`);
 		return this._transformSpaceship(ship);
 	}
+
+	
+	//функции получения url-картинок
+	getPersonImage = ({id}) => {
+		return `${this._imageBase}/characters/${id}.jpg`
+	}
+
+	getStarshipImage = ({id}) => {
+		return `${this._imageBase}/starships/${id}.jpg`
+	}
+
+	getPlanetImage = ({id}) => {
+		return `${this._imageBase}/planets/${id}.jpg`
+	}
+
 
 	//выделяем отдельный метод для получения id из url объекта пришедшего от api
 	_getIdFromUrl(item) {
