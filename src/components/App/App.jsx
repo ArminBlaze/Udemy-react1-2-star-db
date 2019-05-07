@@ -8,7 +8,7 @@ import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import Row from '../Row/Row';
 
 import List from '../List/List';
-import ItemDetails from '../ItemDetails/ItemDetails';
+import ItemDetails, {Record} from '../ItemDetails/ItemDetails';
 import SwapiService from "services/SwapiService";
 
 import './App.css';
@@ -53,9 +53,15 @@ class App extends React.Component {
     } = this.swapiService;
 
     let personDetails = (
-      <ItemDetails itemId={ 11 }
-      getData={ getPerson }
-      getImageUrl={ getPersonImage }/>
+      <ItemDetails 
+        itemId={ 11 }
+        getData={ getPerson }
+        getImageUrl={ getPersonImage }>
+        
+        <Record field="gender" label="Gender" />
+        <Record field="birthYear" label="Birth Year" />
+        <Record field="eyeColor" label="Eye Color" />
+      </ItemDetails>
     );
 
     let starshipDetails = (

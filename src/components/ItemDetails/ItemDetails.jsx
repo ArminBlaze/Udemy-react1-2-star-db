@@ -6,6 +6,18 @@ import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import ErrorButton from '../ErrorButton/ErrorButton';
 
+
+let Record = ({item = null, field, label}) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{field}</span>
+    </li>
+  )
+};
+
+export {Record};
+
 export default class ItemDetails extends Component {
   state = {
     loading: true,
@@ -50,7 +62,6 @@ export default class ItemDetails extends Component {
   }
 
   onDataLoaded = (item) => {
-    console.log(item);
     let getImageUrl = this.props.getImageUrl;
     //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
     this.setState({
@@ -66,11 +77,12 @@ export default class ItemDetails extends Component {
 
 
   render() {
-    console.log(this.state);
     const {item, loading, error, imageUrl} = this.state;
-    if(item) console.log(item);
 
     let id = this.props.itemId;
+    let personView = <PersonView item={item} imageUrl={imageUrl} >
+      {this.props.children}
+    </PersonView>
 
     // if(!item) return <div className="ItemDetails card">Пожалуйста выберите персонажа из списка</div>
 
@@ -78,7 +90,7 @@ export default class ItemDetails extends Component {
       <div className="ItemDetails card">
         {loading ? <Spinner /> : null}
         {error ? <ErrorIndicator /> : null}
-        {id ? <PersonView item={item} imageUrl={imageUrl} /> : "Пожалуйста выберите персонажа из списка"}
+        {id ? personView : "Пожалуйста выберите персонажа из списка"}
         
       </div>
     )
@@ -113,7 +125,7 @@ class PersonView extends Component {
     let {imageLoaded} = this.state;
   
     // style={imageLoaded ? 'visible' : 'hidden'}
-  
+
     return (
       <React.Fragment>
         <img className="item-image"
@@ -128,21 +140,11 @@ class PersonView extends Component {
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
-            </li>
-            <li className="list-group-item">
-              <ErrorButton />
-            </li>
+            { 
+              React.Children.map(this.props.children, (child) => {
+                return child;
+              })
+            }
           </ul>
         </div>
 
