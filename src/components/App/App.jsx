@@ -58,16 +58,22 @@ class App extends React.Component {
         getData={ getPerson }
         getImageUrl={ getPersonImage }>
         
-        <Record field="gender" label="Gender" />
-        <Record field="birthYear" label="Birth Year" />
-        <Record field="eyeColor" label="Eye Color" />
+        <Record field="gender" label="Gender:" />
+        <Record field="birthYear" label="Birth Year:" />
+        <Record field="eyeColor" label="Eye Color:" />
       </ItemDetails>
     );
 
     let starshipDetails = (
-      <ItemDetails itemId={ 5 }
-      getData={ getStarship }
-      getImageUrl={ getStarshipImage }/>
+      <ItemDetails 
+        itemId={ 15 }
+        getData={ getStarship }
+        getImageUrl={ getStarshipImage }>
+
+        <Record field="model" label="Model:" />
+        <Record field="crew" label="Crew:" />
+        <Record field="cost" label="Cost:" />
+      </ItemDetails>
     );
 
     // let planetDetails = (

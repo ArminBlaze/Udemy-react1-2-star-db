@@ -10,8 +10,8 @@ import ErrorButton from '../ErrorButton/ErrorButton';
 let Record = ({item = null, field, label}) => {
   return (
     <li className="list-group-item">
-      <span className="term">{label}</span>
-      <span>{field}</span>
+      <span className="term">{ label }</span>
+      <span>{ item[field] }</span>
     </li>
   )
 };
@@ -120,9 +120,20 @@ class PersonView extends Component {
 
 
   render() {
-    const {eyeColor, gender, birthYear, name = "\u200B", id} = this.props.item;
-    const imageUrl = this.props.imageUrl;
-    let {imageLoaded} = this.state;
+    const { 
+      item,
+      imageUrl, 
+    } = this.props;
+
+    console.log(item);
+
+    const { 
+      name = "\u200B",
+      id,
+    } = item;
+    const { imageLoaded } = this.state;
+
+    // const imageUrl = this.props.imageUrl;
   
     // style={imageLoaded ? 'visible' : 'hidden'}
 
@@ -131,8 +142,6 @@ class PersonView extends Component {
         <img className="item-image"
           src={ id ? `${imageUrl}` : ''} 
           alt={name}
-          width="auto"
-          height="209"
           onLoad={ this.onImageLoad }
           style={{visibility: `${imageLoaded ? 'visible' : 'hidden'}`}}
           />
@@ -142,7 +151,7 @@ class PersonView extends Component {
           <ul className="list-group list-group-flush">
             { 
               React.Children.map(this.props.children, (child) => {
-                return child;
+                return React.cloneElement(child, { item });
               })
             }
           </ul>

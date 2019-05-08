@@ -6,7 +6,8 @@
 
 .ItemDetails .item-image {
   width: 30%;
-  /* height: 30%; */
+  height: 30%;
+  /* align-self: flex-start; */
   border-radius: 10px;
 }
 
