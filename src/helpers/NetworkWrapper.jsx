@@ -41,9 +41,7 @@ const NetworkWrapper = (View, getData) => {
       if(error) return <ErrorIndicator />;
 
       return (
-        <View { ...this.props } data={ this.state.data }>
-          { this.props.children }
-        </View>
+        <View { ...this.props } data={ this.state.data } />
       )
     }
   }
