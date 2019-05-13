@@ -1,44 +1,18 @@
 import React, { Component } from 'react';
 
+import SwapiService from "services/SwapiService";
+import NetworkWrapper from "helpers/NetworkWrapper";
 import './List.css';
 
-import Spinner from "components/Spinner/Spinner";
-import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
-export default class ItemList extends Component {
-
-  state = {
-    itemsList: null,
-    loading: true,
-    error: false,
-  }
-
-
-  componentDidMount() {
-    this.props.getData()
-    .then(this.onPeopleLoaded)
-    .catch(this.onError)
-    .finally( () => {
-      this.setState({loading: false})
-    })
-  }
-
-  onPeopleLoaded = (itemsList) => {
-    console.log(itemsList);
-    //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
-    this.setState({itemsList});
-  }
-
-  onError = (err) => {
-    console.log(err);
-    this.setState({error: true})
-  }
+class ItemList extends Component {
 
   renderItems(arr) {
     return arr.map((item) => {
       //используем рендер-функцию для создания содержимого каждого Li
       //теперь стиль вывода информации задаётся в родительском компоненте
-      let content = this.props.renderFunc(item);
+      let renderFunc = this.props.children;
+      let content = renderFunc(item);
 
       return (
         <li className="list-group-item" key={item.id}
@@ -49,18 +23,17 @@ export default class ItemList extends Component {
     })
   }
 
-
   render() {
-    const {itemsList, loading, error} = this.state;
-    let showContent = !loading && !error;
-
+    const data = this.props.data;
     
     return (
       <ul className="List list-group">
-			  {loading ? <Spinner /> : null}
-        {error ? <ErrorIndicator /> : null}
-        {showContent ? this.renderItems(itemsList) : null }
+			  { this.renderItems(data) }
 		  </ul>
     );
   }
 }
+
+const { getAllPlanets } = new SwapiService();
+
+export default NetworkWrapper(ItemList, getAllPlanets);

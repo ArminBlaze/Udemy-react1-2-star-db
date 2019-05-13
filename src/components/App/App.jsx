@@ -29,6 +29,14 @@ class App extends React.Component {
         showRandomPlanet: !state.showRandomPlanet
       }
     });
+  };
+
+  onPlanetClick = (id) => {
+    console.log(id);
+
+    this.setState({
+      selectedPlanet: id
+    })
   }
 
 
@@ -66,7 +74,7 @@ class App extends React.Component {
 
     let starshipDetails = (
       <ItemDetails 
-        itemId={ 15 }
+        itemId={ this.state.selectedPlanet }
         getData={ getStarship }
         getImageUrl={ getStarshipImage }>
 
@@ -82,14 +90,28 @@ class App extends React.Component {
     //   getImageUrl={ getPlanetImage }/>
     // );
 
+    console.log(this.state.selectedPlanet)
+
+    let planetDetails = (
+      <ItemDetails 
+        itemId={ this.state.selectedPlanet }
+        getData={ getPlanet }
+        getImageUrl={ getPlanetImage }>
+
+        <Record field="population" label="Population:" />
+        <Record field="diameter" label="Diameter:" />
+        <Record field="rotationPeriod" label="Rotation Period:" />
+      </ItemDetails>
+    );
+
     return (
       <div className="StardbApp">
         <Header />
 
-        <Row 
+        {/* <Row 
           leftColumn={ personDetails } 
           rightColumn={ starshipDetails } 
-        />
+        /> */}
 
         {/* {this.state.showRandomPlanet ? <RandomPlanet/> : null} */}
 
@@ -106,19 +128,20 @@ class App extends React.Component {
         {/* <PeoplePage /> */}
 
 
-        {/* <Row 
+        <Row 
           leftColumn={
             <List 
-              onPersonClick={ this.onPersonClick }
+              onPersonClick={ this.onPlanetClick }
               getData={ this.swapiService.getAllPlanets }
-              // в рендер функции можно передавать JSX разметку
-              renderFunc={ (item) => (<span>{item.name} <button>!</button></span>) }
-            /> 
+            >
+              { (item) => (<span>{item.name} <button>!</button></span>) }
+            </List>
           } 
           rightColumn={
-            <ItemDetails selectedPerson={ this.state.selectedPerson } />
+            planetDetails
           } 
-        /> */}
+        />
+
 
 
         {/* <Row 

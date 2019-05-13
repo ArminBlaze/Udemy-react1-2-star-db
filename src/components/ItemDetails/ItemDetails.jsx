@@ -41,6 +41,8 @@ export default class ItemDetails extends Component {
       return;
     } 
 
+    console.log('Начинаю загрузку данных updatePerson')
+
     getData(itemId)
     .then(this.onDataLoaded)
     .catch(this.onError)
@@ -54,7 +56,7 @@ export default class ItemDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.selectedPerson !== prevProps.selectedPerson) {
+    if(this.props.itemId !== prevProps.itemId) {
 
       this.updatePerson();
       console.log('обновить')
@@ -62,6 +64,7 @@ export default class ItemDetails extends Component {
   }
 
   onDataLoaded = (item) => {
+    console.log('загрузил данные')
     let getImageUrl = this.props.getImageUrl;
     //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
     this.setState({
@@ -80,6 +83,10 @@ export default class ItemDetails extends Component {
     const {item, loading, error, imageUrl} = this.state;
 
     let id = this.props.itemId;
+    console.log('itemId: ' + id);
+    console.log(item);
+    console.log(loading);
+
     let personView = <PersonView item={item} imageUrl={imageUrl} >
       {this.props.children}
     </PersonView>
