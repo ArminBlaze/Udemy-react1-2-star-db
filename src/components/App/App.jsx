@@ -6,8 +6,16 @@ import PeoplePage from '../PeoplePage/PeoplePage';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import Row from '../Row/Row';
+import {
+  PersonList,
+  PlanetList,
+  StarshipList,
+} from '../collections/index.js';
 
-import List from '../List/List';
+// import obj from '../collections';
+// console.log(obj);
+
+
 import ItemDetails, {Record} from '../ItemDetails/ItemDetails';
 import SwapiService from "services/SwapiService";
 
@@ -130,12 +138,11 @@ class App extends React.Component {
 
         <Row 
           leftColumn={
-            <List 
+            <PersonList 
               onPersonClick={ this.onPlanetClick }
-              getData={ this.swapiService.getAllPlanets }
             >
               { (item) => (<span>{item.name} <button>!</button></span>) }
-            </List>
+            </PersonList>
           } 
           rightColumn={
             planetDetails
