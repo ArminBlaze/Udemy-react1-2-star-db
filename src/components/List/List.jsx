@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import SwapiService from "services/SwapiService";
-
 import './List.css';
 
 
