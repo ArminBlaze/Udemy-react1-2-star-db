@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import SwapiService from "services/SwapiService";
-import NetworkWrapper from "helpers/NetworkWrapper";
 import './List.css';
 
 
@@ -34,6 +32,4 @@ class ItemList extends Component {
   }
 }
 
-const { getAllPlanets } = new SwapiService();
-
-export default NetworkWrapper(ItemList, getAllPlanets);
+export default ItemList;

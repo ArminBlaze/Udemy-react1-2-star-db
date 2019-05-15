@@ -1,14 +1,21 @@
 import React from 'react';
 
 import Header from '../Header/Header';
-import RandomPlanet from '../RandomPlanet/RandomPlanet';
-import PeoplePage from '../PeoplePage/PeoplePage';
-import ErrorButton from '../ErrorButton/ErrorButton';
+// import RandomPlanet from '../RandomPlanet/RandomPlanet';
+// import PeoplePage from '../PeoplePage/PeoplePage';
+// import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import Row from '../Row/Row';
+import {
+  PersonList,
+  // PlanetList,
+  // StarshipList,
+  PersonDetails,
+  // PlanetDetails,
+  // StarshipDetails,
+} from '../collections/index.js';
 
-import List from '../List/List';
-import ItemDetails, {Record} from '../ItemDetails/ItemDetails';
+
 import SwapiService from "services/SwapiService";
 
 import './App.css';
@@ -39,6 +46,14 @@ class App extends React.Component {
     })
   }
 
+  onPersonClick = (id) => {
+    console.log(id);
+
+    this.setState({
+      selectedPerson: id
+    })
+  }
+
 
   //ловим непойманные ошибки в методах реакта
   componentDidCatch() {
@@ -51,58 +66,6 @@ class App extends React.Component {
   render() {
     if(this.state.reactError) return <ErrorIndicator />
 
-    let {
-      getPerson,
-      getStarship,
-      getPlanet,
-      getPersonImage,
-      getStarshipImage,
-      getPlanetImage,
-    } = this.swapiService;
-
-    let personDetails = (
-      <ItemDetails 
-        itemId={ 11 }
-        getData={ getPerson }
-        getImageUrl={ getPersonImage }>
-        
-        <Record field="gender" label="Gender:" />
-        <Record field="birthYear" label="Birth Year:" />
-        <Record field="eyeColor" label="Eye Color:" />
-      </ItemDetails>
-    );
-
-    let starshipDetails = (
-      <ItemDetails 
-        itemId={ this.state.selectedPlanet }
-        getData={ getStarship }
-        getImageUrl={ getStarshipImage }>
-
-        <Record field="model" label="Model:" />
-        <Record field="crew" label="Crew:" />
-        <Record field="cost" label="Cost:" />
-      </ItemDetails>
-    );
-
-    // let planetDetails = (
-    //   <ItemDetails itemId={ 5 }
-    //   getData={ getPlanet }
-    //   getImageUrl={ getPlanetImage }/>
-    // );
-
-    console.log(this.state.selectedPlanet)
-
-    let planetDetails = (
-      <ItemDetails 
-        itemId={ this.state.selectedPlanet }
-        getData={ getPlanet }
-        getImageUrl={ getPlanetImage }>
-
-        <Record field="population" label="Population:" />
-        <Record field="diameter" label="Diameter:" />
-        <Record field="rotationPeriod" label="Rotation Period:" />
-      </ItemDetails>
-    );
 
     return (
       <div className="StardbApp">
@@ -127,35 +90,18 @@ class App extends React.Component {
 
         {/* <PeoplePage /> */}
 
-
         <Row 
-          leftColumn={
-            <List 
-              onPersonClick={ this.onPlanetClick }
-              getData={ this.swapiService.getAllPlanets }
-            >
-              { (item) => (<span>{item.name} <button>!</button></span>) }
-            </List>
-          } 
-          rightColumn={
-            planetDetails
-          } 
-        />
-
-
-
-        {/* <Row 
           leftColumn={ 
-            <List 
+            <PersonList 
               onPersonClick={ this.onPersonClick }
-              getData={ this.swapiService.getAllStarships }
-              renderFunc={ (item) => item.name }
-            /> 
+            >
+              { (item) => item.name }
+            </PersonList>
           } 
           rightColumn={ 
-            <ItemDetails selectedPerson={ this.state.selectedPerson }/> 
+            <PersonDetails itemId={ this.state.selectedPerson }/> 
           } 
-        /> */}
+        />
   
       </div>
     );

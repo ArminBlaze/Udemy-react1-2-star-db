@@ -4,7 +4,7 @@ import './ItemDetails.css';
 
 import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
-import ErrorButton from '../ErrorButton/ErrorButton';
+// import ErrorButton from '../ErrorButton/ErrorButton';
 
 
 let Record = ({item = null, field, label}) => {
@@ -33,6 +33,10 @@ export default class ItemDetails extends Component {
     }
   }
 
+  componentDidMount() {
+    this.updatePerson();
+  }
+
   updatePerson() {
     if(!this.state.loading) this.setState({loading: true})
     let {itemId, getData} = this.props;
@@ -49,10 +53,6 @@ export default class ItemDetails extends Component {
     .finally( () => {
       this.setState({loading: false})
     })
-  }
-
-  componentDidMount() {
-    this.updatePerson();
   }
 
   componentDidUpdate(prevProps) {

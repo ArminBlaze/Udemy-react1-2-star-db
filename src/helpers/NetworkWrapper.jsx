@@ -4,8 +4,13 @@ import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
 
-const NetworkWrapper = (View, getData) => {
+const NetworkWrapper = (View, getData, onLoad) => {
   return class extends Component {
+
+    // constructor() {
+    //   super();
+    //   this.onDataLoaded = onLoad.bind(this);
+    // }
 
     state = {
       data: null,
@@ -15,18 +20,17 @@ const NetworkWrapper = (View, getData) => {
 
     componentDidMount() {
       getData()
-      .then(this.onPeopleLoaded)
+      .then( (data) => onLoad.call(this, data) )
       .catch(this.onError)
       .finally( () => {
+        console.log(this.props)
         this.setState({loading: false})
       })
     }
   
-    onPeopleLoaded = (data) => {
-      console.log(data);
-      //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
-      this.setState({data});
-    }
+    // onLoad = (data) => {
+    //   this.setState({data});
+    // }
   
     onError = (err) => {
       console.log(err);
