@@ -1,3 +1,5 @@
+import React from 'react';
+
 import List from '../List/List';
 import SwapiService from "services/SwapiService";
 import NetworkWrapper from "helpers/NetworkWrapper";
@@ -14,7 +16,10 @@ function onLoad (data) {
   this.setState({data});
 }
 
-const PersonList = NetworkWrapper(List, getAllPeople, onLoad);
+console.log(List);
+
+const PersonList = NetworkWrapper(<List>{ (item) => item.name }</List>, getAllPeople, onLoad);
+console.log(PersonList);
 
 const PlanetList = NetworkWrapper(List, getAllPlanets, onLoad);
 

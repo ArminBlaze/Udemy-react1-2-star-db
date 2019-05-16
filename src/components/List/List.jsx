@@ -9,6 +9,7 @@ class ItemList extends Component {
     return arr.map((item) => {
       //используем рендер-функцию для создания содержимого каждого Li
       //теперь стиль вывода информации задаётся в родительском компоненте
+      console.log(this.props)
       let renderFunc = this.props.children;
       let content = renderFunc(item);
 

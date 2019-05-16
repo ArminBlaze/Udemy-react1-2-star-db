@@ -94,9 +94,7 @@ class App extends React.Component {
           leftColumn={ 
             <PersonList 
               onPersonClick={ this.onPersonClick }
-            >
-              { (item) => item.name }
-            </PersonList>
+            />
           } 
           rightColumn={ 
             <PersonDetails itemId={ this.state.selectedPerson }/> 
