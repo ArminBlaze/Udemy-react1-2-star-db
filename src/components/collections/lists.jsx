@@ -16,13 +16,22 @@ function onLoad (data) {
   this.setState({data});
 }
 
-console.log(List);
+const WithRenderFunction = (Component, fn) => {
+  return (props) => {
+    return (<Component {...props}>
+      {fn}
+    </Component>)
+  }
+}
 
-const PersonList = NetworkWrapper(<List>{ (item) => item.name }</List>, getAllPeople, onLoad);
-console.log(PersonList);
 
+const ListWithRenderFunction = WithRenderFunction(
+  List, 
+  (item) => item.name
+  );
+
+const PersonList = NetworkWrapper(ListWithRenderFunction, getAllPeople, onLoad);
 const PlanetList = NetworkWrapper(List, getAllPlanets, onLoad);
-
 const StarshipList = NetworkWrapper(List, getAllStarships, onLoad);
 
 

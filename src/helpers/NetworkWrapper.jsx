@@ -45,8 +45,8 @@ const NetworkWrapper = (View, getData, onLoad) => {
       if(error) return <ErrorIndicator />;
 
       return (
-        // <View { ...this.props } data={ this.state.data } />
-        React.cloneElement(View, { ...this.props, data: this.state.data })
+        <View { ...this.props } data={ this.state.data } />
+        // React.cloneElement(View, { ...this.props, data: this.state.data })
       )
     }
   }
