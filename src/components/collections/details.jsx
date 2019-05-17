@@ -5,13 +5,12 @@ import withSwapiService from "helpers/withSwapiService";
 // import { SwapiServiceConsumer } from '../SwapiServiceContext';
 
 
-let PlanetDetails = ({itemId, swapiService}) => {
-
+let PlanetDetails = ({itemId, getData, getImageUrl}) => {
   return (
     <ItemDetails 
-      itemId={ itemId }
-      getData={ swapiService.getPlanet }
-      getImageUrl={ swapiService.getPlanetImage }>
+    itemId={ itemId }
+    getData={ getData }
+    getImageUrl={ getImageUrl }>
 
       <Record field="population" label="Population:" />
       <Record field="diameter" label="Diameter:" />
@@ -20,13 +19,19 @@ let PlanetDetails = ({itemId, swapiService}) => {
   )
 }
 
+let mappingForPlanet = (swapiService) => {
+  return {
+    getData: swapiService.getPlanet,
+    getImageUrl: swapiService.getPlanetImage,
+  }
+}
 
-let PersonDetails = ({itemId, swapiService}) => {
+let PlanetDetailsWithServer = withSwapiService(PlanetDetails, mappingForPlanet);
+
+
+let PersonDetails = (props) => {
   return (
-    <ItemDetails 
-      itemId={ itemId }
-      getData={ swapiService.getPerson }
-      getImageUrl={ swapiService.getPersonImage }>
+    <ItemDetails {...props}>
       
       <Record field="gender" label="Gender:" />
       <Record field="birthYear" label="Birth Year:" />
@@ -35,13 +40,19 @@ let PersonDetails = ({itemId, swapiService}) => {
   );
 }
 
+let mappingForPerson = (swapiService) => {
+  return {
+    getData: swapiService.getPerson,
+    getImageUrl: swapiService.getPersonImage,
+  }
+}
 
-let StarshipDetails = ({itemId, swapiService}) => {
+let PersonDetailsWithServer = withSwapiService(PersonDetails, mappingForPerson);
+
+
+let StarshipDetails = (props) => {
   return (
-    <ItemDetails 
-      itemId={ itemId }
-      getData={ swapiService.getStarship }
-      getImageUrl={ swapiService.getStarshipImage }>
+    <ItemDetails {...props}>
 
       <Record field="model" label="Model:" />
       <Record field="crew" label="Crew:" />
@@ -50,9 +61,14 @@ let StarshipDetails = ({itemId, swapiService}) => {
   );
 }
 
-let PlanetDetailsWithServer = withSwapiService(PlanetDetails);
-let PersonDetailsWithServer = withSwapiService(PersonDetails);
-let StarshipDetailsWithServer = withSwapiService(StarshipDetails);
+let mappingForStarship = (swapiService) => {
+  return {
+    getData: swapiService.getStarship,
+    getImageUrl: swapiService.getStarshipImage,
+  }
+}
+
+let StarshipDetailsWithServer = withSwapiService(StarshipDetails, mappingForStarship);
 
   
 
