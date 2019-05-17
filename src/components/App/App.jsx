@@ -15,8 +15,10 @@ import {
   // StarshipDetails,
 } from '../collections/index.js';
 
-
 import SwapiService from "services/SwapiService";
+// import DummySwapiService from "services/DummySwapiService";
+
+import { SwapiServiceProvider } from '../SwapiServiceContext';
 
 import './App.css';
 
@@ -28,6 +30,7 @@ class App extends React.Component {
   }
 
   swapiService = new SwapiService();
+  // swapiService = new DummySwapiService();
 
 
   toggleRandomPlanet = () => {
@@ -68,40 +71,42 @@ class App extends React.Component {
 
 
     return (
-      <div className="StardbApp">
-        <Header />
+      <SwapiServiceProvider value={ this.swapiService }>
+        <div className="StardbApp">
+          <Header />
 
-        {/* <Row 
-          leftColumn={ personDetails } 
-          rightColumn={ starshipDetails } 
-        /> */}
+          {/* <Row 
+            leftColumn={ personDetails } 
+            rightColumn={ starshipDetails } 
+          /> */}
 
-        {/* {this.state.showRandomPlanet ? <RandomPlanet/> : null} */}
+          {/* {this.state.showRandomPlanet ? <RandomPlanet/> : null} */}
 
-        {/* <div className="row mb2 button-row">
-          <button
-            className="toggle-planet btn btn-warning btn-lg"
-            onClick={this.toggleRandomPlanet}>
-            Toggle Random Planet
-          </button>
-          <ErrorButton />
-        </div> */}
-        
+          {/* <div className="row mb2 button-row">
+            <button
+              className="toggle-planet btn btn-warning btn-lg"
+              onClick={this.toggleRandomPlanet}>
+              Toggle Random Planet
+            </button>
+            <ErrorButton />
+          </div> */}
+          
 
-        {/* <PeoplePage /> */}
+          {/* <PeoplePage /> */}
 
-        <Row 
-          leftColumn={ 
-            <PersonList 
-              onPersonClick={ this.onPersonClick }
-            />
-          } 
-          rightColumn={ 
-            <PersonDetails itemId={ this.state.selectedPerson }/> 
-          } 
-        />
-  
-      </div>
+          <Row 
+            leftColumn={ 
+              <PersonList 
+                onPersonClick={ this.onPersonClick }
+              />
+            } 
+            rightColumn={ 
+              <PersonDetails itemId={ this.state.selectedPerson }/> 
+            } 
+          />
+    
+        </div>
+      </SwapiServiceProvider>
     );
   }
 
