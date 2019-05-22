@@ -1,10 +1,11 @@
 import React from 'react';
 
 import List from '../List/List';
-import SwapiService from "services/SwapiService";
+// import SwapiService from "services/SwapiService";
+import withSwapiService from "helpers/withSwapiService";
 import NetworkWrapper from "helpers/NetworkWrapper";
 
-const { getAllPlanets, getAllPeople, getAllStarships } = new SwapiService();
+// const { getAllPlanets, getAllPeople, getAllStarships } = new SwapiService();
 
 // const onLoad = (data) => {
 //   console.log(data);
@@ -28,15 +29,30 @@ const WithRenderFunction = (Component, fn) => {
 const ListWithRenderFunction = WithRenderFunction(
   List, 
   (item) => item.name
-  );
+);
 
-const PersonList = NetworkWrapper(ListWithRenderFunction, getAllPeople, onLoad);
-const PlanetList = NetworkWrapper(List, getAllPlanets, onLoad);
-const StarshipList = NetworkWrapper(List, getAllStarships, onLoad);
+
+const PersonList = NetworkWrapper(ListWithRenderFunction, onLoad);
+let mappingForPersons = (swapiService) => {
+  return { getData: swapiService.getAllPeople }
+}
+const PersonListWithSwapiService = withSwapiService(PersonList, mappingForPersons);
+
+
+const PlanetList = NetworkWrapper(ListWithRenderFunction, onLoad);
+let mappingForPlanets = (swapiService) => {
+  return { getData: swapiService.getAllPlanets }
+}
+
+
+const StarshipList = NetworkWrapper(ListWithRenderFunction, onLoad);
+let mappingForStarships = (swapiService) => {
+  return { getData: swapiService.getAllStarships }
+}
 
 
 export {
-  PersonList,
+  PersonListWithSwapiService as PersonList,
   PlanetList,
   StarshipList,
 }

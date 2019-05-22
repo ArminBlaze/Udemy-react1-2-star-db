@@ -4,7 +4,7 @@ import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
 
-const NetworkWrapper = (View, getData, onLoad) => {
+const NetworkWrapper = (View, onLoad) => {
   return class extends Component {
 
     // constructor() {
@@ -19,7 +19,7 @@ const NetworkWrapper = (View, getData, onLoad) => {
     }
 
     componentDidMount() {
-      getData()
+      this.props.getData()
       .then( (data) => onLoad.call(this, data) )
       .catch(this.onError)
       .finally( () => {
