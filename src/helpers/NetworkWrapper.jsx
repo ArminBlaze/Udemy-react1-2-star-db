@@ -19,13 +19,22 @@ const NetworkWrapper = (View, onLoad) => {
     }
 
     componentDidMount() {
+      this.updateData();
+    }
+
+    updateData() {
       this.props.getData()
       .then( (data) => onLoad.call(this, data) )
       .catch(this.onError)
       .finally( () => {
-        console.log(this.props)
         this.setState({loading: false})
       })
+    }
+
+    componentDidUpdate(prevProps) {
+      if(this.props.getData !== prevProps.getData) {
+        this.updateData();
+      }
     }
   
     // onLoad = (data) => {

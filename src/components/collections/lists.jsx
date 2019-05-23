@@ -13,7 +13,6 @@ import NetworkWrapper from "helpers/NetworkWrapper";
 // }
 
 function onLoad (data) {
-  console.log(data);
   this.setState({data});
 }
 

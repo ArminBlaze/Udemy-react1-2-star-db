@@ -56,7 +56,9 @@ export default class ItemDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.itemId !== prevProps.itemId) {
+    if(this.props.itemId !== prevProps.itemId
+      || this.props.getData !== prevProps.getData
+      || this.props.getImageUrl !== prevProps.getImageUrl) {
 
       this.updatePerson();
       console.log('обновить')
@@ -83,9 +85,6 @@ export default class ItemDetails extends Component {
     const {item, loading, error, imageUrl} = this.state;
 
     let id = this.props.itemId;
-    console.log('itemId: ' + id);
-    console.log(item);
-    console.log(loading);
 
     let personView = <PersonView item={item} imageUrl={imageUrl} >
       {this.props.children}

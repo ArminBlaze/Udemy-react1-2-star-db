@@ -25,3 +25,7 @@
 .Header h3 a:hover {
   color: #00bc8c;
 }
+
+.Header button {
+  margin-bottom: 16px;
+}

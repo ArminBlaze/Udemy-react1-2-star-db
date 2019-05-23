@@ -16,7 +16,7 @@ import {
 } from '../collections/index.js';
 
 import SwapiService from "services/SwapiService";
-// import DummySwapiService from "services/DummySwapiService";
+import DummySwapiService from "services/DummySwapiService";
 
 import { SwapiServiceProvider } from '../SwapiServiceContext';
 
@@ -27,10 +27,8 @@ class App extends React.Component {
   state = {
     showRandomPlanet: true,
     reactError: false,
+    swapiService: new SwapiService(),
   }
-
-  swapiService = new SwapiService();
-  // swapiService = new DummySwapiService();
 
 
   toggleRandomPlanet = () => {
@@ -40,6 +38,15 @@ class App extends React.Component {
       }
     });
   };
+
+  onServiceChange = () => {
+    this.setState( ({swapiService}) => {
+      const Service = (swapiService instanceof SwapiService) 
+      ? DummySwapiService : SwapiService;
+
+      return { swapiService: new Service() }
+    })
+  }
 
   onPlanetClick = (id) => {
     console.log(id);
@@ -71,9 +78,9 @@ class App extends React.Component {
 
 
     return (
-      <SwapiServiceProvider value={ this.swapiService }>
+      <SwapiServiceProvider value={ this.state.swapiService }>
         <div className="StardbApp">
-          <Header />
+          <Header onServiceChange={this.onServiceChange}/>
 
           {/* <Row 
             leftColumn={ personDetails } 
