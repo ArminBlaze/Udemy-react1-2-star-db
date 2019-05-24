@@ -24,7 +24,7 @@ const Header = ({onServiceChange}) => {
       <button 
       className="btn btn-primary btn-sm"
       type="button"
-      onClick={onServiceChange}>Change service</button>
+      onClick={onServiceChange}>Change API service</button>
     </div>
   )
 }

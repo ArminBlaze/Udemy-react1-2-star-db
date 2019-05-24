@@ -42,16 +42,18 @@ const PlanetList = NetworkWrapper(ListWithRenderFunction, onLoad);
 let mappingForPlanets = (swapiService) => {
   return { getData: swapiService.getAllPlanets }
 }
+const PlanetListWithSwapiService = withSwapiService(PlanetList, mappingForPlanets);
 
 
 const StarshipList = NetworkWrapper(ListWithRenderFunction, onLoad);
 let mappingForStarships = (swapiService) => {
   return { getData: swapiService.getAllStarships }
 }
+const StarshipListWithSwapiService = withSwapiService(StarshipList, mappingForStarships);
 
 
 export {
   PersonListWithSwapiService as PersonList,
-  PlanetList,
-  StarshipList,
+  PlanetListWithSwapiService as PlanetList,
+  StarshipListWithSwapiService as StarshipList,
 }

@@ -1,18 +1,18 @@
 import React from 'react';
 
 import Header from '../Header/Header';
-// import RandomPlanet from '../RandomPlanet/RandomPlanet';
+import RandomPlanet from '../RandomPlanet/RandomPlanet';
 // import PeoplePage from '../PeoplePage/PeoplePage';
-// import ErrorButton from '../ErrorButton/ErrorButton';
+import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 import Row from '../Row/Row';
 import {
   PersonList,
-  // PlanetList,
-  // StarshipList,
+  PlanetList,
+  StarshipList,
   PersonDetails,
-  // PlanetDetails,
-  // StarshipDetails,
+  PlanetDetails,
+  StarshipDetails,
 } from '../collections/index.js';
 
 import SwapiService from "services/SwapiService";
@@ -29,7 +29,6 @@ class App extends React.Component {
     reactError: false,
     swapiService: new SwapiService(),
   }
-
 
   toggleRandomPlanet = () => {
     this.setState((state) => {
@@ -64,6 +63,14 @@ class App extends React.Component {
     })
   }
 
+  onStarshipClick = (id) => {
+    console.log(id);
+
+    this.setState({
+      selectedStarship: id
+    })
+  }
+
 
   //ловим непойманные ошибки в методах реакта
   componentDidCatch() {
@@ -82,34 +89,34 @@ class App extends React.Component {
         <div className="StardbApp">
           <Header onServiceChange={this.onServiceChange}/>
 
-          {/* <Row 
-            leftColumn={ personDetails } 
-            rightColumn={ starshipDetails } 
-          /> */}
+          {this.state.showRandomPlanet ? <RandomPlanet/> : null}
 
-          {/* {this.state.showRandomPlanet ? <RandomPlanet/> : null} */}
-
-          {/* <div className="row mb2 button-row">
+          <div className="row mb2 button-row">
             <button
               className="toggle-planet btn btn-warning btn-lg"
               onClick={this.toggleRandomPlanet}>
               Toggle Random Planet
             </button>
             <ErrorButton />
-          </div> */}
+          </div>
           
 
           {/* <PeoplePage /> */}
 
           <Row 
-            leftColumn={ 
-              <PersonList 
-                onPersonClick={ this.onPersonClick }
-              />
+            leftColumn={ <PersonList onItemClick={ this.onPersonClick } /> } 
+            rightColumn={ <PersonDetails itemId={ this.state.selectedPerson }/> 
             } 
-            rightColumn={ 
-              <PersonDetails itemId={ this.state.selectedPerson }/> 
-            } 
+          />
+
+          <Row 
+            leftColumn={ <PlanetList onItemClick={ this.onPlanetClick } /> } 
+            rightColumn={ <PlanetDetails itemId={ this.state.selectedPlanet } /> } 
+          />
+
+          <Row 
+            leftColumn={ <StarshipList onItemClick={ this.onStarshipClick } /> } 
+            rightColumn={ <StarshipDetails itemId={ this.state.selectedStarship } /> } 
           />
     
         </div>

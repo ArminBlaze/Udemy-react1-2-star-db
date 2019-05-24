@@ -15,7 +15,7 @@ class ItemList extends Component {
 
       return (
         <li className="list-group-item" key={item.id}
-        onClick={ () => this.props.onPersonClick(item.id) }>
+        onClick={ () => this.props.onItemClick(item.id) }>
           {content}
         </li>
       )
