@@ -38,7 +38,12 @@ export default class ItemDetails extends Component {
   }
 
   updatePerson() {
-    if(!this.state.loading) this.setState({loading: true})
+    // if(!this.state.loading) this.setState({loading: true})
+    this.setState({
+      loading: true,
+      error: false
+    });
+
     let {itemId, getData} = this.props;
     if(!itemId) {
       this.setState({loading: false});

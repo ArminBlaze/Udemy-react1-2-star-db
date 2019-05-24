@@ -23,6 +23,11 @@ const NetworkWrapper = (View, onLoad) => {
     }
 
     updateData() {
+      this.setState({
+        loading: true,
+        error: false
+      });
+
       this.props.getData()
       .then( (data) => onLoad.call(this, data) )
       .catch(this.onError)
