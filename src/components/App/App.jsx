@@ -2,18 +2,14 @@ import React from 'react';
 
 import Header from '../Header/Header';
 import RandomPlanet from '../RandomPlanet/RandomPlanet';
-// import PeoplePage from '../PeoplePage/PeoplePage';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
-import Row from '../Row/Row';
+
 import {
-  PersonList,
-  PlanetList,
-  StarshipList,
-  PersonDetails,
-  PlanetDetails,
-  StarshipDetails,
-} from '../collections/index.js';
+  PeoplePage,
+  PlanetPage,
+  StarshipPage,
+} from '../pages/index.js';
 
 import SwapiService from "services/SwapiService";
 import DummySwapiService from "services/DummySwapiService";
@@ -47,31 +43,6 @@ class App extends React.Component {
     })
   }
 
-  onPlanetClick = (id) => {
-    console.log(id);
-
-    this.setState({
-      selectedPlanet: id
-    })
-  }
-
-  onPersonClick = (id) => {
-    console.log(id);
-
-    this.setState({
-      selectedPerson: id
-    })
-  }
-
-  onStarshipClick = (id) => {
-    console.log(id);
-
-    this.setState({
-      selectedStarship: id
-    })
-  }
-
-
   //ловим непойманные ошибки в методах реакта
   componentDidCatch() {
     console.log('componentDidCatch()');
@@ -80,9 +51,9 @@ class App extends React.Component {
     })
   }
 
+
   render() {
     if(this.state.reactError) return <ErrorIndicator />
-
 
     return (
       <SwapiServiceProvider value={ this.state.swapiService }>
@@ -99,26 +70,11 @@ class App extends React.Component {
             </button>
             <ErrorButton />
           </div>
-          
 
-          {/* <PeoplePage /> */}
+          <PeoplePage />
+          <PlanetPage />
+          <StarshipPage />
 
-          <Row 
-            leftColumn={ <PersonList onItemClick={ this.onPersonClick } /> } 
-            rightColumn={ <PersonDetails itemId={ this.state.selectedPerson }/> 
-            } 
-          />
-
-          <Row 
-            leftColumn={ <PlanetList onItemClick={ this.onPlanetClick } /> } 
-            rightColumn={ <PlanetDetails itemId={ this.state.selectedPlanet } /> } 
-          />
-
-          <Row 
-            leftColumn={ <StarshipList onItemClick={ this.onStarshipClick } /> } 
-            rightColumn={ <StarshipDetails itemId={ this.state.selectedStarship } /> } 
-          />
-    
         </div>
       </SwapiServiceProvider>
     );
