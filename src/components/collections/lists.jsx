@@ -31,29 +31,31 @@ const ListWithRenderFunction = WithRenderFunction(
 );
 
 
-const PersonList = NetworkWrapper(ListWithRenderFunction, onLoad);
+const NetworkList1 = NetworkWrapper(ListWithRenderFunction, onLoad);
 let mappingForPersons = (swapiService) => {
   return { getData: swapiService.getAllPeople }
 }
-const PersonListWithSwapiService = withSwapiService(PersonList, mappingForPersons);
+const PersonList = withSwapiService(NetworkList1, mappingForPersons);
 
 
-const PlanetList = NetworkWrapper(ListWithRenderFunction, onLoad);
+const NetworkList2 = NetworkWrapper(ListWithRenderFunction, onLoad);
+
 let mappingForPlanets = (swapiService) => {
   return { getData: swapiService.getAllPlanets }
 }
-const PlanetListWithSwapiService = withSwapiService(PlanetList, mappingForPlanets);
+const PlanetList = withSwapiService(NetworkList2, mappingForPlanets);
 
 
-const StarshipList = NetworkWrapper(ListWithRenderFunction, onLoad);
+const NetworkList3 = NetworkWrapper(ListWithRenderFunction, onLoad);
+
 let mappingForStarships = (swapiService) => {
   return { getData: swapiService.getAllStarships }
 }
-const StarshipListWithSwapiService = withSwapiService(StarshipList, mappingForStarships);
+const StarshipList = withSwapiService(NetworkList3, mappingForStarships);
 
 
 export {
-  PersonListWithSwapiService as PersonList,
-  PlanetListWithSwapiService as PlanetList,
-  StarshipListWithSwapiService as StarshipList,
+  PersonList,
+  PlanetList,
+  StarshipList,
 }
