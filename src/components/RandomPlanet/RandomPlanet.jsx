@@ -24,8 +24,9 @@ export default class RandomPlanet extends Component {
   //инициализируем сервис для работы с сервером
   swapiService = new SwapiService();
 
-  //убираем получение данных о планете из конструктора в DidMount
-  
+  static defaultProps = {
+    updateInterval: 10000,
+  }
 
   //получение данных о планете тут. Гарантированно можно менять state, и есть DOM
   //Запускаем тут код, который создаёт побочные эффекты
