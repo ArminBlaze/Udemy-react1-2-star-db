@@ -60,7 +60,7 @@ class App extends React.Component {
         <div className="StardbApp">
           <Header onServiceChange={this.onServiceChange}/>
 
-          {this.state.showRandomPlanet ? <RandomPlanet updateInterval="20000"/> : null}
+          {this.state.showRandomPlanet ? <RandomPlanet updateInterval={20000}/> : null}
 
           <div className="row mb2 button-row">
             <button
