@@ -87,11 +87,15 @@ export default class RandomPlanet extends Component {
       </div>
     );
   }
+
+  static defaultProps = {
+    updateInterval: 10000,
+  }
 }
 
-RandomPlanet.defaultProps = {
-  updateInterval: 10000,
-}
+// RandomPlanet.defaultProps = {
+//   updateInterval: 10000,
+// }
 
 
 const PlanetView = (props) => {
