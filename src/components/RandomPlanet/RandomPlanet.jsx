@@ -30,9 +30,10 @@ export default class RandomPlanet extends Component {
   //получение данных о планете тут. Гарантированно можно менять state, и есть DOM
   //Запускаем тут код, который создаёт побочные эффекты
   componentDidMount() {
+    const { updateInterval } = this.props;
     this.updatePlanet();
 
-    this.interval = setInterval(this.updatePlanet, 10000);
+    this.interval = setInterval(this.updatePlanet, updateInterval);
   }
 
   componentWillUnmount() {
@@ -87,6 +88,11 @@ export default class RandomPlanet extends Component {
     );
   }
 }
+
+RandomPlanet.defaultProps = {
+  updateInterval: 10000,
+}
+
 
 const PlanetView = (props) => {
   const {population, rotationPeriod, diameter, name = "\u200B", id} = props.planet;
