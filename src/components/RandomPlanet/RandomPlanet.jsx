@@ -4,7 +4,6 @@ import './RandomPlanet.css';
 import SwapiService from "services/SwapiService";
 import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
-import { isNamespace } from 'postcss-selector-parser';
 
 
 export default class RandomPlanet extends Component {
