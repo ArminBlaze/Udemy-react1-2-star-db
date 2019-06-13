@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import './List.css';
 
 
 class ItemList extends Component {
+
+  static defaultProps = {
+    onItemClick: () => {},
+  }
+
+  static propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onItemClick: PropTypes.func,
+    children: PropTypes.func.isRequired,
+  }
 
   renderItems(arr) {
     return arr.map((item) => {
@@ -33,5 +44,7 @@ class ItemList extends Component {
     );
   }
 }
+
+
 
 export default ItemList;

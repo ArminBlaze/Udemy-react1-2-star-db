@@ -4,7 +4,7 @@ import './RandomPlanet.css';
 import SwapiService from "services/SwapiService";
 import Spinner from "components/Spinner/Spinner";
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
-
+import PropTypes from 'prop-types';
 
 export default class RandomPlanet extends Component {
 
@@ -29,15 +29,7 @@ export default class RandomPlanet extends Component {
   }
 
   static propTypes = {
-    updateInterval: (props, propName, componentName) => {
-      const value = props[propName];
-
-      if( typeof value === 'number' && !isNaN(value) ) {
-        return null;
-      }
-
-      return new TypeError(`${componentName}: ${propName} must be number`);
-    }
+    updateInterval: PropTypes.number,
   }
 
   //получение данных о планете тут. Гарантированно можно менять state, и есть DOM
