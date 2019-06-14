@@ -6,16 +6,23 @@
 .Header ul li {
   list-style: none;
   margin: 0;
-  padding: .5rem 1rem;
-  border-radius: 3px;
+  /* padding: .5rem 1rem; */
+  /* border-radius: 3px; */
 }
 
 .Header ul li:hover {
   background-color: #444;
 }
 
+.Header ul a {
+  display: block;
+  padding: .5rem 1rem;
+  border-radius: 3px;
+}
+
 .Header a:hover {
   text-decoration: none;
+  color: white;
 }
 
 .Header h3 a {
