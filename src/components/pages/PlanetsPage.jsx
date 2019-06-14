@@ -6,7 +6,7 @@ import {
   PlanetDetails,
 } from '../collections/index.js';
 
-class PlanetPage extends React.Component {
+class PlanetsPage extends React.Component {
 
   state = {}
 
@@ -29,4 +29,4 @@ class PlanetPage extends React.Component {
   
 }
 
-export {PlanetPage};
+export {PlanetsPage};

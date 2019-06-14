@@ -5,10 +5,12 @@ import RandomPlanet from '../RandomPlanet/RandomPlanet';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import {
   PeoplePage,
-  PlanetPage,
-  StarshipPage,
+  PlanetsPage,
+  StarshipsPage,
 } from '../pages/index.js';
 
 import SwapiService from "services/SwapiService";
@@ -57,25 +59,31 @@ class App extends React.Component {
 
     return (
       <SwapiServiceProvider value={ this.state.swapiService }>
-        <div className="StardbApp">
-          <Header onServiceChange={this.onServiceChange}/>
+        <Router>
+          <div className="StardbApp">
+            <Header onServiceChange={this.onServiceChange}/>
 
-          {this.state.showRandomPlanet ? <RandomPlanet updateInterval={20000}/> : null}
+            {this.state.showRandomPlanet ? <RandomPlanet updateInterval={20000}/> : null}
 
-          <div className="row mb2 button-row">
-            <button
-              className="toggle-planet btn btn-warning btn-lg"
-              onClick={this.toggleRandomPlanet}>
-              Toggle Random Planet
-            </button>
-            <ErrorButton />
+            <div className="row mb2 button-row">
+              <button
+                className="toggle-planet btn btn-warning btn-lg"
+                onClick={this.toggleRandomPlanet}>
+                Toggle Random Planet
+              </button>
+              <ErrorButton />
+            </div>
+
+            {/* <PeoplePage />
+            <PlanetPage />
+            <StarshipPage /> */}
+
+            <Route path="/people" component={PeoplePage} />
+            <Route path="/planets" component={PlanetsPage} />
+            <Route path="/starships" component={StarshipsPage} />
+
           </div>
-
-          <PeoplePage />
-          <PlanetPage />
-          <StarshipPage />
-
-        </div>
+        </Router>
       </SwapiServiceProvider>
     );
   }

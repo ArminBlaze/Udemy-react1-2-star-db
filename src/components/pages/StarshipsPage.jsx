@@ -6,7 +6,7 @@ import {
   StarshipDetails,
 } from '../collections/index.js';
 
-class StarshipPage extends React.Component {
+class StarshipsPage extends React.Component {
 
   state = {}
 
@@ -29,4 +29,4 @@ class StarshipPage extends React.Component {
   
 }
 
-export {StarshipPage};
+export {StarshipsPage};

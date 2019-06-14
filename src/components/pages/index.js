@@ -1,3 +1,3 @@
 export * from './PeoplePage';
-export * from './PlanetPage';
-export * from './StarshipPage';
+export * from './PlanetsPage';
+export * from './StarshipsPage';
