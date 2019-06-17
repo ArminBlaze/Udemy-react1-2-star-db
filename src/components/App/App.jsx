@@ -90,7 +90,7 @@ class App extends React.Component {
             <Route path="/starships/:id" 
               render={
                 ({match, location, history}) => {
-                  console.log(match);
+                  // console.log(match);
                   return <StarshipDetails itemId={ match.params.id }/>
                 }
               } />

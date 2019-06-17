@@ -1,32 +1,26 @@
 import React from 'react';
-import Row from '../Row/Row';
+import { withRouter } from 'react-router-dom';
 
 import {
   StarshipList,
-  StarshipDetails,
 } from '../collections/index.js';
 
-class StarshipsPage extends React.Component {
-
-  state = {}
-
-  onStarshipClick = (id) => {
-    console.log(id);
-
-    this.setState({
-      selectedStarship: id
-    })
-  }
-
-  render() {
-    return (
-      <Row 
-        leftColumn={ <StarshipList onItemClick={ this.onStarshipClick } /> } 
-        rightColumn={ <StarshipDetails itemId={ this.state.selectedStarship } /> } 
-      />
-    )
-  }
+function StarshipsPage ( {history} ) {
   
+
+  return (
+    <StarshipList onItemClick={ onStarshipClick } />  
+  )
+
+  function onStarshipClick(id) {
+    let newPath = `/starships/${id}`;
+
+    history.push(newPath);
+  }
 }
 
-export {StarshipsPage};
+
+
+let pageWithRouter = withRouter( StarshipsPage );
+
+export {pageWithRouter as StarshipsPage};
