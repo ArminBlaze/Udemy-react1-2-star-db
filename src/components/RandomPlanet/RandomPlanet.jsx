@@ -50,7 +50,6 @@ export default class RandomPlanet extends Component {
     let maxPlanetNumber = 19;
     let minPlanetNumber = 2;
     let id = this.generateRandom(minPlanetNumber, maxPlanetNumber);
-    console.log(id);
 
     //получаем с сервера планету через сервис для работы с сервером
     this.swapiService.getPlanet(id)
@@ -73,7 +72,6 @@ export default class RandomPlanet extends Component {
   }
 
   onPlanetLoaded = (planet) => {
-    console.log(planet);
     //когда данные загружены обновляем планету и меняем флаг загрузки, чтобы спрятать спиннер
     this.setState({planet});
   }

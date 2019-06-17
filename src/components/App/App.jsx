@@ -6,6 +6,9 @@ import ErrorButton from '../ErrorButton/ErrorButton';
 import ErrorIndicator from "components/ErrorIndicator/ErrorIndicator";
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {
+  StarshipDetails,
+} from '../collections/index.js';
 
 import {
   PeoplePage,
@@ -83,7 +86,14 @@ class App extends React.Component {
                    exact={true} />
             <Route path="/people" component={PeoplePage} />
             <Route path="/planets" component={PlanetsPage} />
-            <Route path="/starships" component={StarshipsPage} />
+            <Route path="/starships" exact component={StarshipsPage} />
+            <Route path="/starships/:id" 
+              render={
+                ({match, location, history}) => {
+                  console.log(match);
+                  return <StarshipDetails itemId={ match.params.id }/>
+                }
+              } />
 
           </div>
         </Router>
