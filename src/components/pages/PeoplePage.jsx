@@ -1,32 +1,37 @@
 import React from 'react';
 import Row from '../Row/Row';
+import { withRouter, Route } from 'react-router-dom';
 
 import {
   PersonList,
   PersonDetails,
 } from '../collections/index.js';
 
-class PeoplePage extends React.Component {
+function PeoplePage ( {match, history} ) {
 
-  state = {}
 
-  onPersonClick = (id) => {
+  function onPersonClick (id) {
     console.log(id);
 
-    this.setState({
-      selectedPerson: id
-    })
+    history.push(id);
   }
 
-  render() {
-    return (
-      <Row 
-        leftColumn={ <PersonList onItemClick={ this.onPersonClick } /> } 
-        rightColumn={ <PersonDetails itemId={ this.state.selectedPerson }/> } 
-      />
-    )
-  }
+  return (
+    <Row 
+      leftColumn={ <PersonList onItemClick={ onPersonClick } /> } 
+      rightColumn={ <Route path="/people/:id" 
+        render={
+          ({ match }) => {
+            // console.log(match);
+            return <PersonDetails itemId={ match.params.id }/>
+          }
+        } />
+      } 
+    />
+  )
 
 }
 
-export {PeoplePage};
+let pageWithRouter = withRouter( PeoplePage );
+
+export {pageWithRouter as PeoplePage};
