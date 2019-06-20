@@ -13,9 +13,9 @@ function StarshipsPage ( {history} ) {
   )
 
   function onStarshipClick(id) {
-    let newPath = `/starships/${id}`;
+    // let newPath = `/starships/${id}`;
 
-    history.push(newPath);
+    history.push(id);
   }
 }
 
