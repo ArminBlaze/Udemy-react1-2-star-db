@@ -14,6 +14,8 @@ import {
   PeoplePage,
   PlanetsPage,
   StarshipsPage,
+  LoginPage,
+  SecretPage
 } from '../pages/index.js';
 
 import SwapiService from "services/SwapiService";
@@ -29,6 +31,13 @@ class App extends React.Component {
     showRandomPlanet: true,
     reactError: false,
     swapiService: new SwapiService(),
+    isLoggedIn: false,
+  }
+
+  onLogin = () => {
+    this.setState({
+      isLoggedIn: true
+    })
   }
 
   toggleRandomPlanet = () => {
@@ -58,6 +67,8 @@ class App extends React.Component {
 
 
   render() {
+    const { isLoggedIn } = this.state;
+
     if(this.state.reactError) return <ErrorIndicator />
 
     return (
@@ -94,6 +105,15 @@ class App extends React.Component {
                   return <StarshipDetails itemId={ match.params.id }/>
                 }
               } />
+            <Route path="/login"  render={() => (
+              <LoginPage 
+                isLoggedIn={ isLoggedIn }
+                onLogin={ this.onLogin }
+              />
+              )} />
+            <Route path="/secret"  render={() => (
+              <SecretPage isLoggedIn={ isLoggedIn } />
+              )} />
 
           </div>
         </Router>
